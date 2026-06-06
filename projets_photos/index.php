@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/models/auth.php';
+require_once __DIR__ . '/models/concours.php';
 
 $erreur = '';
 $action = $_GET['action'] ?? $_POST['action'] ?? '';
@@ -30,6 +31,7 @@ if ($action === 'connexion' && $_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 if (est_connecte()) {
+    $concours = recuperer_concours_actuel();
     require __DIR__ . '/vues/accueil.php';
 } else {
     require __DIR__ . '/vues/login.php';
