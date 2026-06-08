@@ -1,0 +1,48 @@
+
+/*** 
+css du footer 
+***/
+footer {
+    background: #fcfafa; /* Fond violet */
+    color: #330066; /* Texte clair */
+    padding: 15px;
+    font-family: sans-serif;
+  
+    bottom: 0;
+    width: 100%; /* Prend toute la largeur */
+    z-index: 1000;
+    margin-top: auto;
+}
+
+.contenu-pied-de-page {
+    display: flex; /* Disposition horizontale */
+    justify-content: space-between; /* Éléments espacés à gauche, centre, droite */
+    align-items: center;
+    max-width: 1200px; /* Largeur max */
+    margin: 0 auto; /* Centrer le contenu */
+    width: 100%;
+}
+
+.gauche, .centre {
+    margin: 0;
+}
+
+.droite {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 15px;
+    margin: 0;
+}
+
+.droite a {
+    color: #ccc;
+    text-decoration: none;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.droite a:hover {
+    color: #0ce71e; /* Texte vert au survol */
+    transform: scale(1.05); /* Légère mise en valeur */
+}
+

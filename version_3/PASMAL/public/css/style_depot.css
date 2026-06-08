@@ -1,0 +1,50 @@
+.depot-page {
+    width: min(850px, calc(100% - 48px));
+    margin: 72px auto 92px;
+    text-align: center;
+}
+
+.depot-page h1 {
+    color: #003aa0;
+    font-size: 34px;
+    margin: 0 0 10px;
+    font-weight: 900;
+}
+
+.zone-upload,
+#form-photo,
+.depot-form-card {
+    border: 1px solid #d7e2f3;
+    background: #fff;
+    border-radius: 8px;
+    padding: 24px;
+    margin: 22px auto;
+    box-shadow: 0 4px 18px rgba(0, 40, 120, 0.05);
+}
+
+#aperçu-photo {
+    max-width: 100%;
+    max-height: 340px;
+    object-fit: contain;
+    border-radius: 6px;
+    margin-bottom: 16px;
+}
+
+#btn-choisir { margin: 0 auto; }
+
+#form-photo {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    text-align: left;
+}
+
+#form-photo button { align-self: center; }
+
+.message {
+    border: 1px solid #ffd0d0;
+    background: #fff7f7;
+    color: #b00020;
+    padding: 12px;
+    border-radius: 6px;
+}

@@ -1,0 +1,217 @@
+:root {
+    --bleu: #003b8f;
+    --bleu-fonce: #002b75;
+    --bleu-titre: #003aa0;
+    --orange: #ff6b00;
+    --texte: #061b5f;
+    --fond: #f8fbff;
+    --bordure: #d7e2f3;
+    --ombre: 0 4px 18px rgba(0, 40, 120, 0.06);
+}
+
+* { box-sizing: border-box; }
+
+html, body { min-height: 100%; }
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #fff;
+    color: var(--texte);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.entete {
+    min-height: 82px;
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    padding: 12px 42px;
+    background: linear-gradient(135deg, var(--bleu), var(--bleu-fonce));
+    color: #fff;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+}
+
+.marque {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+.logo-cadre {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border-radius: 3px;
+    padding: 5px 8px;
+    min-height: 48px;
+}
+
+.logo {
+    height: 42px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+}
+
+.titre-entete {
+    margin-left: auto;
+    font-size: 20px;
+    font-weight: 800;
+    color: #fff;
+    white-space: nowrap;
+}
+
+main, .page-contenu {
+    width: min(1120px, calc(100% - 48px));
+    margin: 0 auto;
+}
+
+.page-simple,
+.page-centree {
+    width: min(850px, calc(100% - 48px));
+    margin: 72px auto 92px;
+    text-align: center;
+}
+
+.page-simple h1,
+.page-simple h2,
+.page-centree h1,
+.page-centree h2,
+.titre-page {
+    color: var(--bleu-titre);
+    font-size: 34px;
+    margin: 0 0 10px;
+    font-weight: 800;
+}
+
+.soulignement-orange {
+    width: 56px;
+    height: 3px;
+    background: var(--orange);
+    margin: 18px auto 36px;
+}
+
+.carte-message,
+.info-box {
+    border: 1px solid #7fb0ff;
+    background: linear-gradient(180deg, #f4f9ff, #ffffff);
+    border-radius: 7px;
+    padding: 30px;
+    margin: 0 auto 42px;
+    color: var(--texte);
+    line-height: 1.8;
+    box-shadow: var(--ombre);
+    font-size: 18px;
+}
+
+.carte-message p,
+.info-box p { margin: 0 0 8px; }
+.carte-message p:last-child,
+.info-box p:last-child { margin-bottom: 0; }
+
+.separateur {
+    border: 0;
+    height: 1px;
+    background: #cbd8ee;
+    margin: 36px 0;
+}
+
+.btn-retour,
+.btn-principal,
+button,
+input[type="submit"] {
+    display: inline-block;
+    border: 2px solid var(--orange);
+    background: #fff;
+    color: var(--orange);
+    padding: 14px 34px;
+    border-radius: 6px;
+    font-weight: 800;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.2s ease;
+    font-size: 15px;
+}
+
+.btn-principal,
+button:hover,
+.btn-retour:hover,
+input[type="submit"]:hover {
+    background: var(--orange);
+    color: #fff;
+}
+
+.pied-page,
+footer {
+    margin-top: auto;
+    background: linear-gradient(135deg, var(--bleu), var(--bleu-fonce));
+    color: #fff;
+    min-height: 76px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px;
+    gap: 6px;
+}
+
+.footer-logo {
+    background: #fff;
+    border-radius: 3px;
+    padding: 3px 7px;
+    display: inline-flex;
+}
+
+.footer-logo img {
+    height: 30px;
+    width: auto;
+    display: block;
+}
+
+footer .centre {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    text-align: center;
+}
+
+input,
+textarea,
+select {
+    border: 1px solid var(--bordure);
+    border-radius: 6px;
+    padding: 14px 16px;
+    font-size: 15px;
+    color: var(--texte);
+    background: #fff;
+}
+
+textarea { min-height: 120px; resize: vertical; }
+
+.message,
+.error-msg,
+.p-error {
+    color: #b00020;
+    font-weight: 700;
+}
+
+.message-ok {
+    color: #087a32;
+    font-weight: 700;
+}
+
+@media (max-width: 900px) {
+    .entete {
+        padding: 12px 18px;
+        flex-wrap: wrap;
+    }
+    .titre-entete { order: 2; margin-left: 0; }
+    main, .page-contenu, .page-simple, .page-centree { width: calc(100% - 28px); }
+}

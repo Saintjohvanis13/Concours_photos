@@ -1,0 +1,42 @@
+<?php require('views/blocs/entete.php'); ?>
+
+<main class="page-simple">
+    <h2>Phase de résultats</h2>
+    <div class="soulignement-orange"></div>
+
+    <?php if ($photosTop3 === null): ?>
+        <div class="carte-message">
+            <p>Les résultats ne sont pas encore disponibles.</p>
+            <p><strong>Ils seront publiés en semaine 41</strong></p>
+            <p>(à partir du 05/10/2026).</p>
+        </div>
+        <hr class="separateur">
+        <a href="index.php?req=accueil" class="btn-retour">Retour à l’accueil</a>
+
+    <?php elseif (empty($photosTop3)): ?>
+        <div class="carte-message">
+            <p>Aucune photo n’a encore reçu de votes.</p>
+        </div>
+        <hr class="separateur">
+        <a href="index.php?req=accueil" class="btn-retour">Retour à l’accueil</a>
+
+    <?php else: ?>
+        <div class="cartes-info" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); text-align:center;">
+            <?php foreach ($photosTop3 as $rang => $photo): ?>
+                <?php
+                    $description = htmlspecialchars($photo['description']);
+                    $image = htmlspecialchars($photo['image']);
+                    $votes = htmlspecialchars($photo['nb_votes']);
+                ?>
+                <div class="carte-info">
+                    <strong><?= $rang + 1 ?>e place</strong>
+                    <p><?= $description ?></p>
+                    <img src="<?= $image ?>" alt="Photo" style="width:100%; height:170px; object-fit:cover; border-radius:6px; margin:12px 0;">
+                    <p>Nombre de votes : <?= $votes ?></p>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+</main>
+
+<?php require('views/blocs/pied.php'); ?>
