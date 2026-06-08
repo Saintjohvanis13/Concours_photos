@@ -21,12 +21,12 @@ function toutes_photos() {
     $req = $connex->prepare('SELECT p.*, u.nom, u.prenom FROM Photo p JOIN Utilisateur u ON p.idUtilisateur=u.idUtilisateur ORDER BY p.dateDepot DESC');
     $req->execute(); return $req->fetchAll();
 }
-function supprimer_photo($idPhoto, $idUtilisateur) {
+function supprimer_photo($id, $idUtilisateur) {
     $connex = connection();
     $req = $connex->prepare('DELETE FROM Photo WHERE idPhoto=:p AND idUtilisateur=:u');
-    $req->execute([':p'=>$idPhoto, ':u'=>$idUtilisateur]);
+    $req->execute([':p'=>$id, ':u'=>$idUtilisateur]);
 }
-function changer_statut_photo($idPhoto, $statut) {
+function changer_statut_photo($id, $statut) {
     $connex = connection();
     $req = $connex->prepare('UPDATE Photo SET statut=:s WHERE idPhoto=:p');
     $req->execute([':s'=>$statut, ':p'=>$idPhoto]);
