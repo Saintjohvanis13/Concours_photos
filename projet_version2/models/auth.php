@@ -25,7 +25,7 @@ function creer_ou_recuperer_utilisateur($infosLdap) {
 
     $idUtilisateur = $connex->lastInsertId();
 
-    $req = $connex->prepare('SELECT * FROM Utilisateur WHERE idUtilisateur = :idUtilisateur LIMIT 1');
+    $req = $connex->prepare('SELECT * FROM Utilisateur WHERE id = :id LIMIT 1');
     $req->bindValue(':idUtilisateur', $idUtilisateur, PDO::PARAM_INT);
     $req->execute();
 
@@ -49,7 +49,7 @@ function connecter_utilisateur($login, $motDePasse) {
         return 'bloque';
     }
 
-    $_SESSION['idUtilisateur'] = $utilisateur['idUtilisateur'];
+    $_SESSION['idUtilisateur'] = $utilisateur['id'];
     $_SESSION['login'] = $utilisateur['login'];
     $_SESSION['nom'] = $utilisateur['nom'];
     $_SESSION['prenom'] = $utilisateur['prenom'];
