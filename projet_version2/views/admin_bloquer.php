@@ -1,0 +1,3 @@
+<?php require __DIR__ . '/header.php'; ?>
+<main class="page"><h1>Bloquer un participant</h1><table><tr><th>Nom</th><th>Login</th><th>Rôle</th><th>Action</th></tr><?php foreach($utilisateurs as $u): ?><tr><td><?= htmlspecialchars($u['prenom'].' '.$u['nom']) ?></td><td><?= htmlspecialchars($u['login']) ?></td><td><?= htmlspecialchars($u['role']) ?></td><td><?php if($u['bloque']): ?><a href="index.php?route=admin_bloquer&id=<?= $u['idUtilisateur'] ?>&bloque=0">Débloquer</a><?php else: ?><a href="index.php?route=admin_bloquer&id=<?= $u['idUtilisateur'] ?>&bloque=1">Bloquer</a><?php endif; ?></td></tr><?php endforeach; ?></table></main>
+<?php require __DIR__ . '/footer.php'; ?>
