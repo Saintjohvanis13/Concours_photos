@@ -1,6 +1,8 @@
 <?php
 
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 if (!isset($_SESSION['id'])) {
     die("Vous devez être connecté pour accéder à cette page.");
@@ -10,34 +12,22 @@ require_once(__DIR__ . '/../models/depot_crud.php');
 require_once(__DIR__ . '/../models/Etudiant.php');
 
 $etudiantId = $_SESSION['id'];
+$etudiantConnecte = recuperer_etudiant_par_id($etudiantId);
 
-// Vérification de la période de dépôt
-$dateDebut = recuperer_date_debut_depot();
-$dateFin = recuperer_date_fin_depot();
-$today = date('Y-m-d');
-
-if ($today < $dateDebut || $today > $dateFin) {
-    require('views/blocs/entete.php');
-    echo '<main class="page-simple">';
-    echo '<h2>Phase de dépôt</h2>';
-    echo '<div class="soulignement-orange"></div>';
-    echo '<div class="carte-message">';
-    echo '<p>Le dépôt des photos n’est pas encore ouvert.</p>';
-    echo '<p><strong>Il ouvrira le ' . htmlspecialchars($dateDebut) . ' à 00h00.</strong></p>';
-    echo '</div>';
-    echo '<hr class="separateur">';
-    echo '<p>Revenez à cette date pour déposer votre photo.</p>';
-    echo '<a href="index.php?req=accueil" class="btn-retour">Retour à l’accueil</a>';
-    echo '</main>';
-    require('views/blocs/pied.php');
-    exit;
+if (!etudiant_est_administrateur($etudiantConnecte)) {
+    die("Accès réservé aux étudiants qui ont le rôle administrateur.");
 }
 
+// IMPORTANT : dans cette version, le dépôt est réservé aux administrateurs.
+// Comme l'administrateur doit pouvoir déposer une photo même pour les tests,
+// on ne bloque pas sa page avec les dates de la phase de dépôt.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (photo_existe($etudiantId)) {
         $_SESSION['message'] = "Vous avez déjà déposé une photo.";
     } elseif (!isset($_FILES['photo']) || $_FILES['photo']['error'] !== UPLOAD_ERR_OK) {
         $_SESSION['message'] = "Erreur lors de l'envoi de la photo.";
+    } elseif (!fichier_photo_valide($_FILES['photo'])) {
+        $_SESSION['message'] = "Le fichier envoyé doit être une image.";
     } else {
         $description = trim($_POST['description'] ?? '');
 
@@ -53,5 +43,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 
-// Affichage du formulaire
 include(__DIR__ . '/../views/depot_view.php');

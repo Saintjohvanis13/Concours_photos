@@ -11,8 +11,12 @@ if ($reqCourante === 'depot') {
     $pageTitre = 'Vote';
 } elseif ($reqCourante === 'resultat') {
     $pageTitre = 'Résultats';
-} elseif ($reqCourante === 'admin' || $reqCourante === 'admin_photos') {
+} elseif ($reqCourante === 'admin') {
     $pageTitre = 'Administration';
+} elseif ($reqCourante === 'modifier_photos') {
+    $pageTitre = 'Modifier les photos';
+} elseif ($reqCourante === 'utilisateurs_admin') {
+    $pageTitre = 'Utilisateurs';
 }
 
 echo '<!DOCTYPE html>
@@ -26,6 +30,7 @@ echo '<!DOCTYPE html>
     <link rel="stylesheet" href="public/css/style_log_acc.css">
     <link rel="stylesheet" href="public/css/style_depot.css">
     <link rel="stylesheet" href="public/css/vote.css">
+    <link rel="stylesheet" href="public/css/admin.css">
     <script src="public/js/script.js" defer></script>
 </head>
 <body>

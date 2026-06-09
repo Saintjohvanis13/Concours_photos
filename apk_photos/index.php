@@ -8,7 +8,7 @@ session_start();
 $rte = $_GET['req'] ?? 'login';
 
 // Liste des routes qui nécessitent une authentification
-$routes_protegees = ['accueil', 'vote', 'admin', 'admin_photos'];
+$routes_protegees = ['accueil', 'vote', 'admin', 'modifier_photos', 'utilisateurs_admin'];
 
 
 
@@ -32,10 +32,16 @@ switch ($rte) {
         ctrl_admin();
         break;
 
-    case 'admin_photos':
-        require("controllers/AdminPhotoController.php");
-        ctrl_photos_admin();
+    case 'modifier_photos':
+        require("controllers/AdminPhotosController.php");
+        ctrl_modifier_photos();
         break;
+
+    case 'utilisateurs_admin':
+        require("controllers/AdminUtilisateursController.php");
+        ctrl_utilisateurs_admin();
+        break;
+
 
     case 'logout':
         require("controllers/LogoutController.php");

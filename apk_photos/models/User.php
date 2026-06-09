@@ -37,8 +37,5 @@ class User {
         }
     }
 
-    // Ancien nom gardé pour éviter de casser un appel existant.
-    public static function authenticate($login, $password) {
-        return self::authentifier($login, $password);
-    }
+   
 }

@@ -13,12 +13,6 @@
         <p>Votre photo doit respecter le thème : <strong>Vacances estivales</strong>.</p>
     </div>
 
-    <div class="zone-upload" id="zone-upload">
-        <img id="aperçu-photo" src="" alt="Aperçu" hidden>
-        <input type="file" name="photo" id="input-photo" accept="image/*" hidden>
-        <button id="btn-choisir" type="button">Choisir une photo</button>
-    </div>
-
     <form id="form-photo" method="POST" action="index.php?req=depot" enctype="multipart/form-data">
         <input type="file" name="photo" accept="image/*" required>
         <textarea name="description" placeholder="Description de la photo" required></textarea>

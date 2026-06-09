@@ -39,6 +39,3 @@ function recuperer_top3_photos_tour2() {
     return $resultats;
 }
 
-// Anciens noms gardés pour compatibilité.
-function isResultatsActifs() { return resultats_sont_actifs(); }
-function getTop3PhotosTour2() { return recuperer_top3_photos_tour2(); }

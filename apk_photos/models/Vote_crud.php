@@ -82,14 +82,3 @@ function recuperer_ids_photos_depuis_dossier() {
     }
     return $ids;
 }
-
-// Anciens noms gardés pour compatibilité.
-function get_phase1_start_date($pdo) { return recuperer_date_debut_vote1($pdo); }
-function get_phase1_end_date($pdo) { return recuperer_date_fin_vote1($pdo); }
-function get_phase2_start_date($pdo) { return recuperer_date_debut_vote2($pdo); }
-function get_phase2_end_date($pdo) { return recuperer_date_fin_vote2($pdo); }
-function get_vote_count($pdo, $userId, $phase) { return compter_votes($pdo, $userId, $phase); }
-function insert_vote($pdo, $userId, $phase, $photoId) { return enregistrer_vote($pdo, $userId, $phase, $photoId); }
-function get_top10_photos($pdo) { return recuperer_top10_photos($pdo); }
-function has_already_voted_for_photo($pdo, $userId, $photoId, $phase) { return a_deja_vote_pour_photo($pdo, $userId, $photoId, $phase); }
-function get_photo_ids_from_directory() { return recuperer_ids_photos_depuis_dossier(); }

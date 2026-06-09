@@ -19,11 +19,4 @@ function modifier_configuration($parametre, $valeur) {
     $stmt->execute([$valeur, $parametre]);
 }
 
-// Anciens noms gardés pour compatibilité.
-function get_all_configuration() {
-    return recuperer_toute_configuration();
-}
 
-function update_configuration($parametre, $valeur) {
-    modifier_configuration($parametre, $valeur);
-}

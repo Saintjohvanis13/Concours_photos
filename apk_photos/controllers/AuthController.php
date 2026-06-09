@@ -57,7 +57,7 @@ try {
     $aColonneAdmin = in_array('admin', $colonnes, true);
     $aColonneRole = in_array('role', $colonnes, true);
 
-    $champs = ['id'];
+    $champs = ['id', 'description'];
     if ($aColonneAdmin) {
         $champs[] = 'admin';
     }
@@ -95,6 +95,14 @@ try {
     } else {
         $etudiantId = $etudiant['id'];
         $role = determiner_role_etudiant($etudiant);
+
+        // Si l'administrateur a bloqué cet étudiant, il ne peut plus entrer dans le site.
+        // On utilise la colonne description car elle existe déjà dans la base.
+        if (isset($etudiant['description']) && strtolower(trim($etudiant['description'])) === 'bloque') {
+            $error = 'Votre compte a été bloqué par un administrateur.';
+            include __DIR__ . '/../views/login.php';
+            exit;
+        }
     }
 
     $_SESSION['id'] = $etudiantId;

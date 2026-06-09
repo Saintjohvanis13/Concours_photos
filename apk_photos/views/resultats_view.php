@@ -21,7 +21,7 @@
         <a href="index.php?req=accueil" class="btn-retour">Retour à l’accueil</a>
 
     <?php else: ?>
-        <div class="cartes-info" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); text-align:center;">
+        <div class="cartes-info cartes-resultats">
             <?php foreach ($photosTop3 as $rang => $photo): ?>
                 <?php
                     $description = htmlspecialchars($photo['description']);
@@ -31,7 +31,7 @@
                 <div class="carte-info">
                     <strong><?= $rang + 1 ?>e place</strong>
                     <p><?= $description ?></p>
-                    <img src="<?= $image ?>" alt="Photo" style="width:100%; height:170px; object-fit:cover; border-radius:6px; margin:12px 0;">
+                    <img class="image-resultat" src="<?= $image ?>" alt="Photo">
                     <p>Nombre de votes : <?= $votes ?></p>
                 </div>
             <?php endforeach; ?>

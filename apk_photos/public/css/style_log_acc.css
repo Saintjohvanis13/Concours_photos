@@ -244,3 +244,17 @@ body.login-body {
     .prix-ligne div { border-right: 0; border-bottom: 1px solid #d7e2f3; }
     .prix-ligne div:last-child { border-bottom: 0; }
 }
+
+/* Résultats */
+.cartes-resultats {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    text-align: center;
+}
+
+.image-resultat {
+    width: 100%;
+    height: 170px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin: 12px 0;
+}

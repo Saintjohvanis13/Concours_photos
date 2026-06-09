@@ -14,12 +14,10 @@ function connexion_base_de_donnees() {
     return $connex;
 }
 
-// Ancien nom gardé pour éviter de casser un fichier qui appellerait encore connection().
+
 function connection() {
     return connexion_base_de_donnees();
 }
 
 
-// Lors de la connexion réussie
-//$_SESSION['user_id'] = $etudiant['id'];
-//$_SESSION['is_admin'] = $etudiant['admin'] == 1;
+

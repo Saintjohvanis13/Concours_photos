@@ -8,7 +8,7 @@
         <?php if ($phase === 0): ?>
             <div class="carte-message">
                 <p>Le vote n’est pas encore ouvert.</p>
-                <p><strong>Il ouvrira le 28/09/2026 à 00h00.</strong></p>
+
             </div>
             <a href="index.php?req=accueil" class="btn-retour">Retour à l’accueil</a>
         <?php else: ?>

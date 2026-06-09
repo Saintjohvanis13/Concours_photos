@@ -1,18 +1,17 @@
 <?php
 function ctrl_vote() {
-    session_start();
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
 
-    
-
-    // Vérification de session
     if (!isset($_SESSION['id'])) {
         die("Vous devez être connecté pour voter.");
     }
 
-	 require('models/connection.php');
+    require('models/connection.php');
     require_once('models/Etudiant.php');
     require('models/Vote_crud.php');
-    
+
     $etudiantId = $_SESSION['id'];
     $etudiant = recuperer_etudiant_par_id($etudiantId);
 
@@ -20,26 +19,16 @@ function ctrl_vote() {
         die("Étudiant introuvable en base.");
     }
 
-    $login = $etudiant['login']; // ex: "CHEICK N'DIAYE"
-
-    // Un administrateur est aussi un étudiant dans ce projet.
-    // Donc il a le droit de voter comme les autres utilisateurs connectés.
-    $roleUtilisateur = $_SESSION['role'] ?? 'etudiant';
-    $estAdmin = ($roleUtilisateur === 'admin')
-        || (isset($etudiant['admin']) && (int)$etudiant['admin'] === 1)
-        || (isset($etudiant['role']) && strtolower(trim($etudiant['role'])) === 'admin');
-
-    $peutVoter = ($roleUtilisateur === 'etudiant') || $estAdmin;
-    if (!$peutVoter) {
-        die("Votre compte n'est pas autorisé à voter.");
+    if (!etudiant_est_administrateur($etudiant)) {
+        die("Accès réservé aux étudiants qui ont le rôle administrateur.");
     }
 
-    $idUtilisateur = $etudiantId; // utilisé pour les votes
+    $login = $etudiant['login'] ?? '';
+    $idUtilisateur = $etudiantId;
 
     $error = '';
     $phase = 0;
 
-    // Détermination de la phase de vote
     $pdo = connexion_base_de_donnees();
     $now = date('Y-m-d');
     $vote1_start = recuperer_date_debut_vote1($pdo);
@@ -51,6 +40,10 @@ function ctrl_vote() {
         $phase = 1;
     } elseif ($now >= $vote2_start && $now <= $vote2_end) {
         $phase = 2;
+    }
+
+    if ($phase === 0) {
+        $phase = 1;
     }
 
     if ($phase === 1) {
@@ -74,7 +67,7 @@ function ctrl_vote() {
         }
 
     } elseif ($phase === 2) {
-        $top = recuperer_top10_photos($pdo);
+        $top = recuperer_top3_photos($pdo);
         $photoIds = [];
 
         foreach ($top as $photo) {
@@ -99,11 +92,7 @@ function ctrl_vote() {
                 exit;
             }
         }
-
-    } else {
-        $photoIds = []; // Hors période
     }
 
-    // Passe aussi $login à la vue
     require('views/vote_view.php');
 }
