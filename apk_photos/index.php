@@ -34,7 +34,7 @@ switch ($rte) {
 
     case 'admin_photos':
         require("controllers/AdminPhotoController.php");
-        ctrl_admin_photos();
+        ctrl_photos_admin();
         break;
 
     case 'logout':
@@ -48,7 +48,7 @@ switch ($rte) {
         
      case 'resultat':
      		require("controllers/ResultController.php");
-     		afficherTop3Resultats();
+     		afficher_top3_resultats();
      		break;
 
     default:

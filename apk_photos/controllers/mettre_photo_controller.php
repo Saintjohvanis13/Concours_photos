@@ -12,8 +12,8 @@ require_once(__DIR__ . '/../models/Etudiant.php');
 $etudiantId = $_SESSION['id'];
 
 // Vérification de la période de dépôt
-$dateDebut = getDateDebut();
-$dateFin = getDateFin();
+$dateDebut = recuperer_date_debut_depot();
+$dateFin = recuperer_date_fin_depot();
 $today = date('Y-m-d');
 
 if ($today < $dateDebut || $today > $dateFin) {
@@ -34,16 +34,16 @@ if ($today < $dateDebut || $today > $dateFin) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (photoExiste($etudiantId)) {
+    if (photo_existe($etudiantId)) {
         $_SESSION['message'] = "Vous avez déjà déposé une photo.";
     } elseif (!isset($_FILES['photo']) || $_FILES['photo']['error'] !== UPLOAD_ERR_OK) {
         $_SESSION['message'] = "Erreur lors de l'envoi de la photo.";
     } else {
         $description = trim($_POST['description'] ?? '');
 
-        if (!enregistrerPhoto($etudiantId, $_FILES['photo']['tmp_name'])) {
+        if (!enregistrer_photo($etudiantId, $_FILES['photo']['tmp_name'])) {
             $_SESSION['message'] = "Erreur lors de l'enregistrement du fichier.";
-        } elseif (!updateDescription($etudiantId, $description)) {
+        } elseif (!modifier_description($etudiantId, $description)) {
             $_SESSION['message'] = "Erreur lors de la mise à jour de la description.";
         } else {
             $_SESSION['message'] = "Photo déposée avec succès.";

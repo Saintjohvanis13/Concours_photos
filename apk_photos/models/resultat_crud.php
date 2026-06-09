@@ -1,8 +1,8 @@
 <?php
 require_once(__DIR__ . '/connection.php');
 
-function isResultatsActifs() {
-    $db = connection(); // 
+function resultats_sont_actifs() {
+    $db = connexion_base_de_donnees();
 
     $stmt = $db->prepare("
         SELECT parametre, valeur 
@@ -10,14 +10,14 @@ function isResultatsActifs() {
         WHERE parametre IN ('resultat2_debut', 'resultat2_fin')
     ");
     $stmt->execute();
-    $dates = $stmt->fetchAll(PDO::FETCH_KEY_PAIR); // ['resultat2_debut' => '...', 'resultat2_fin' => '...']
+    $dates = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
 
     $today = date('Y-m-d');
     return ($today >= $dates['resultat2_debut'] && $today <= $dates['resultat2_fin']);
 }
 
-function getTop3PhotosTour2() {
-    $db = connection();
+function recuperer_top3_photos_tour2() {
+    $db = connexion_base_de_donnees();
 
     $query = "
         SELECT id_photo, COUNT(*) AS nb_votes
@@ -32,9 +32,13 @@ function getTop3PhotosTour2() {
 
     foreach ($resultats as &$ligne) {
         $id = $ligne['id_photo'];
-        $ligne['image'] = "photos/" . $id . ".jpg";  // dossier photo
+        $ligne['image'] = "photos/" . $id . ".jpg";
         $ligne['description'] = "Photo n°" . $id;
     }
 
     return $resultats;
 }
+
+// Anciens noms gardés pour compatibilité.
+function isResultatsActifs() { return resultats_sont_actifs(); }
+function getTop3PhotosTour2() { return recuperer_top3_photos_tour2(); }

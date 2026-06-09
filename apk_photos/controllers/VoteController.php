@@ -14,7 +14,7 @@ function ctrl_vote() {
     require('models/Vote_crud.php');
     
     $etudiantId = $_SESSION['id'];
-    $etudiant = getEtudiantById($etudiantId);
+    $etudiant = recuperer_etudiant_par_id($etudiantId);
 
     if (!$etudiant) {
         die("Étudiant introuvable en base.");
@@ -22,18 +22,30 @@ function ctrl_vote() {
 
     $login = $etudiant['login']; // ex: "CHEICK N'DIAYE"
 
-    $userId = $etudiantId; // utilisé pour les votes
+    // Un administrateur est aussi un étudiant dans ce projet.
+    // Donc il a le droit de voter comme les autres utilisateurs connectés.
+    $roleUtilisateur = $_SESSION['role'] ?? 'etudiant';
+    $estAdmin = ($roleUtilisateur === 'admin')
+        || (isset($etudiant['admin']) && (int)$etudiant['admin'] === 1)
+        || (isset($etudiant['role']) && strtolower(trim($etudiant['role'])) === 'admin');
+
+    $peutVoter = ($roleUtilisateur === 'etudiant') || $estAdmin;
+    if (!$peutVoter) {
+        die("Votre compte n'est pas autorisé à voter.");
+    }
+
+    $idUtilisateur = $etudiantId; // utilisé pour les votes
 
     $error = '';
     $phase = 0;
 
     // Détermination de la phase de vote
-    $pdo = connection();
+    $pdo = connexion_base_de_donnees();
     $now = date('Y-m-d');
-    $vote1_start = get_phase1_start_date($pdo);
-    $vote1_end = get_phase1_end_date($pdo);
-    $vote2_start = get_phase2_start_date($pdo);
-    $vote2_end = get_phase2_end_date($pdo);
+    $vote1_start = recuperer_date_debut_vote1($pdo);
+    $vote1_end = recuperer_date_fin_vote1($pdo);
+    $vote2_start = recuperer_date_debut_vote2($pdo);
+    $vote2_end = recuperer_date_fin_vote2($pdo);
 
     if ($now >= $vote1_start && $now <= $vote1_end) {
         $phase = 1;
@@ -42,8 +54,8 @@ function ctrl_vote() {
     }
 
     if ($phase === 1) {
-        $photoIds = get_photo_ids_from_directory();
-        $voteCount = get_vote_count($pdo, $userId, 1);
+        $photoIds = recuperer_ids_photos_depuis_dossier();
+        $voteCount = compter_votes($pdo, $idUtilisateur, 1);
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['vote'], $_POST['vote_id'])) {
             $voteId = $_POST['vote_id'];
@@ -52,17 +64,17 @@ function ctrl_vote() {
                 $error = "Photo invalide sélectionnée.";
             } elseif ($voteCount >= 3) {
                 $error = "Vous avez déjà utilisé vos 3 votes.";
-            } elseif (has_already_voted_for_photo($pdo, $userId, $voteId, 1)) {
+            } elseif (a_deja_vote_pour_photo($pdo, $idUtilisateur, $voteId, 1)) {
                 $error = "Vous avez déjà voté pour cette photo.";
             } else {
-                insert_vote($pdo, $userId, 1, $voteId);
+                enregistrer_vote($pdo, $idUtilisateur, 1, $voteId);
                 header("Location: " . $_SERVER['REQUEST_URI']);
                 exit;
             }
         }
 
     } elseif ($phase === 2) {
-        $top = get_top10_photos($pdo);
+        $top = recuperer_top10_photos($pdo);
         $photoIds = [];
 
         foreach ($top as $photo) {
@@ -72,7 +84,7 @@ function ctrl_vote() {
             }
         }
 
-        $voteCount = get_vote_count($pdo, $userId, 2);
+        $voteCount = compter_votes($pdo, $idUtilisateur, 2);
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['vote'], $_POST['vote_id'])) {
             $voteId = $_POST['vote_id'];
@@ -82,7 +94,7 @@ function ctrl_vote() {
             } elseif (!in_array($voteId, $photoIds)) {
                 $error = "Photo invalide.";
             } else {
-                insert_vote($pdo, $userId, 2, $voteId);
+                enregistrer_vote($pdo, $idUtilisateur, 2, $voteId);
                 header("Location: " . $_SERVER['REQUEST_URI']);
                 exit;
             }

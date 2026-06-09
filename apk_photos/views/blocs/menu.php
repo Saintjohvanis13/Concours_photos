@@ -7,7 +7,7 @@ require_once 'models/Etudiant.php';
 $login = '';
 $role = '';
 if (isset($_SESSION['id'])) {
-    $etudiant = getEtudiantById($_SESSION['id']);
+    $etudiant = recuperer_etudiant_par_id($_SESSION['id']);
     if ($etudiant) {
         $login = $etudiant['login'];
         $role = $_SESSION['role'] ?? '';

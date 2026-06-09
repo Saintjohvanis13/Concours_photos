@@ -1,9 +1,9 @@
 
 <?php
 class User {
-    // Fonction d'authentification avec LDAP
-    public static function authenticate($login, $password) {
-        // Connexion à LDAP
+    // Fonction d'authentification avec LDAP.
+    public static function authentifier($login, $password) {
+        // Connexion à LDAP.
         $connex = ldap_connect(LDAP_SERVER);
         ldap_set_option($connex, LDAP_OPT_PROTOCOL_VERSION, 3);
 
@@ -13,13 +13,13 @@ class User {
 
         ldap_bind($connex);
 
-        // Requête LDAP sécurisée pour éviter les injections LDAP
+        // Requête LDAP sécurisée pour éviter les injections LDAP.
         $req = 'supannAliasLogin=' . ldap_escape($login, '', LDAP_ESCAPE_FILTER);
         $res = ldap_search($connex, LDAP_ROOT_DN, $req);
         $datas = ldap_get_entries($connex, $res);
 
         if ($datas['count'] > 0) {
-            // Vérification du mot de passe avec ldap_bind
+            // Vérification du mot de passe avec ldap_bind.
             $uid = $datas[0]['uid'][0];
             $dn = 'uid=' . $uid . ',' . LDAP_ROOT_DN;
 
@@ -35,5 +35,10 @@ class User {
         } else {
             return ['success' => false, 'message' => 'Utilisateur non trouvé'];
         }
+    }
+
+    // Ancien nom gardé pour éviter de casser un appel existant.
+    public static function authenticate($login, $password) {
+        return self::authentifier($login, $password);
     }
 }

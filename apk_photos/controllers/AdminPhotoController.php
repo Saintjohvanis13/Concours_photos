@@ -1,7 +1,7 @@
 <?php
 require_once("models/Etudiant.php");
 
-function ctrl_admin_photos() {
+function ctrl_photos_admin() {
     session_start();
  
   
@@ -22,7 +22,7 @@ function ctrl_admin_photos() {
         }
     }
 
-    $etudiants = get_all_etudiants();
+    $etudiants = recuperer_tous_etudiants();
     include("views/admin_photos_view.php");
 }
 
