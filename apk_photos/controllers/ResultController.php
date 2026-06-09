@@ -13,7 +13,10 @@ function afficher_top3_resultats() {
 
     $etudiantConnecte = recuperer_etudiant_par_id($_SESSION['id']);
     if (!etudiant_est_administrateur($etudiantConnecte)) {
-        die("Accès réservé aux étudiants qui ont le rôle administrateur.");
+        $titrePage = 'Phase de résultats';
+        $messagePage = 'Renenez prochainement.';
+        require('views/concours_non_accessible_view.php');
+        return;
     }
 
     // Les administrateurs peuvent voir les résultats même si la date officielle n'est pas encore ouverte.

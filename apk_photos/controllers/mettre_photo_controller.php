@@ -15,12 +15,12 @@ $etudiantId = $_SESSION['id'];
 $etudiantConnecte = recuperer_etudiant_par_id($etudiantId);
 
 if (!etudiant_est_administrateur($etudiantConnecte)) {
-    die("Accès réservé aux étudiants qui ont le rôle administrateur.");
+    $titrePage = 'Phase de dépôt';
+    $messagePage = 'Revenez prochainement.';
+    include(__DIR__ . '/../views/concours_non_accessible_view.php');
+    exit;
 }
 
-// IMPORTANT : dans cette version, le dépôt est réservé aux administrateurs.
-// Comme l'administrateur doit pouvoir déposer une photo même pour les tests,
-// on ne bloque pas sa page avec les dates de la phase de dépôt.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (photo_existe($etudiantId)) {
         $_SESSION['message'] = "Vous avez déjà déposé une photo.";

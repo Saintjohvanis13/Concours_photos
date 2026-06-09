@@ -5,12 +5,12 @@ if (session_status() === PHP_SESSION_NONE) {
 require_once 'models/Etudiant.php';
 
 $login = '';
-$role = '';
+$estAdmin = false;
 if (isset($_SESSION['id'])) {
     $etudiant = recuperer_etudiant_par_id($_SESSION['id']);
     if ($etudiant) {
         $login = $etudiant['login'];
-        $role = $_SESSION['role'] ?? '';
+        $estAdmin = etudiant_est_administrateur($etudiant);
     }
 }
 $req = $_GET['req'] ?? 'accueil';
@@ -26,7 +26,7 @@ function classe_active($nom, $req) {
         <li><a<?= classe_active('vote', $req) ?> href="index.php?req=vote">Votes</a></li>
         <li><a<?= classe_active('resultat', $req) ?> href="index.php?req=resultat">Résultats</a></li>
 
-        <?php if ($role === 'admin'): ?>
+        <?php if ($estAdmin): ?>
             <li><a<?= classe_active('admin', $req) ?> href="index.php?req=admin">Administrer</a></li>
         <?php endif; ?>
 

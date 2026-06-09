@@ -5,11 +5,6 @@
     <div class="soulignement-orange"></div>
 
     <?php if ($photosTop3 === null): ?>
-        <div class="carte-message">
-            <p>Les résultats ne sont pas encore disponibles.</p>
-            <p><strong>Ils seront publiés en semaine 41</strong></p>
-            <p>(à partir du 05/10/2026).</p>
-        </div>
         <hr class="separateur">
         <a href="index.php?req=accueil" class="btn-retour">Retour à l’accueil</a>
 

@@ -20,7 +20,10 @@ function ctrl_vote() {
     }
 
     if (!etudiant_est_administrateur($etudiant)) {
-        die("Accès réservé aux étudiants qui ont le rôle administrateur.");
+        $titrePage = 'Phase de vote';
+        $messagePage = 'Revenez prochainement.';
+        require('views/concours_non_accessible_view.php');
+        return;
     }
 
     $login = $etudiant['login'] ?? '';
