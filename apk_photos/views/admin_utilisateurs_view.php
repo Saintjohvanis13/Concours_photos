@@ -1,28 +1,29 @@
-<?php require('views/blocs/entete.php'); ?>
+<?php require 'views/blocs/entete.php'; ?>
 
-<main>
-    <h1>Liste des utilisateurs</h1>
+<main class="page-simple">
+    <h1>Liste des participants</h1>
+
+    <?php if (!empty($_SESSION['message_admin_utilisateurs'])): ?>
+        <p class="message-ok"><?= htmlspecialchars($_SESSION['message_admin_utilisateurs']) ?></p>
+        <?php unset($_SESSION['message_admin_utilisateurs']); ?>
+    <?php endif; ?>
 
     <?php if (empty($etudiants)): ?>
-        <p>Aucun utilisateur.</p>
+        
     <?php else: ?>
         <ul>
             <?php foreach ($etudiants as $etudiant): ?>
                 <li>
-                    <?= htmlspecialchars($etudiant['id']) ?> -
+                    <?= (int)$etudiant['id'] ?> -
                     <?= htmlspecialchars($etudiant['login']) ?> -
                     <?= etudiant_est_administrateur($etudiant) ? 'admin' : 'étudiant' ?> -
-                    <?= htmlspecialchars($etudiant['date']) ?> -
-                    <?= etudiant_est_bloque($etudiant) ? 'bloqué' : 'autorisé' ?>
+                   
                 </li>
             <?php endforeach; ?>
         </ul>
     <?php endif; ?>
 
-            
- <a class="admin-btn admin-btn-retour" href="index.php?req=admin">Retour au tableau de bord</a>
-    
-
+    <a class="admin-btn admin-btn-retour" href="index.php?req=admin">Retour au tableau de bord</a>
 </main>
 
-<?php require('views/blocs/pied.php'); ?>
+<?php require 'views/blocs/pied.php'; ?>

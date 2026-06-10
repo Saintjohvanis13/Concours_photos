@@ -3,6 +3,7 @@
 
 DROP TABLE IF EXISTS vote2;
 DROP TABLE IF EXISTS vote1;
+DROP TABLE IF EXISTS photo;
 DROP TABLE IF EXISTS configuration;
 DROP TABLE IF EXISTS etudiant;
 
@@ -12,6 +13,19 @@ CREATE TABLE etudiant (
     admin BOOLEAN NOT NULL DEFAULT FALSE,
     date DATETIME NOT NULL,
     description VARCHAR(200) NOT NULL DEFAULT ''
+);
+
+CREATE TABLE configuration (
+    parametre VARCHAR(30) PRIMARY KEY,
+    valeur DATE NOT NULL
+);
+
+CREATE TABLE photo (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nom_fichier VARCHAR(255) NOT NULL,
+    date_depot DATETIME NOT NULL,
+    id_etu INT NOT NULL,
+    FOREIGN KEY (id_etu) REFERENCES etudiant(id)
 );
 
 CREATE TABLE vote1 (
@@ -30,21 +44,14 @@ CREATE TABLE vote2 (
     FOREIGN KEY (id_etu) REFERENCES etudiant(id)
 );
 
-CREATE TABLE configuration (
-    parametre VARCHAR(30) PRIMARY KEY,
-    valeur DATE NOT NULL
-);
-
-CREATE TABLE photo (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    nom_fichier VARCHAR(255) NOT NULL,
-    date_depot DATETIME NOT NULL,
-    id_etu INT NOT NULL,
-    FOREIGN KEY (id_etu) REFERENCES etudiant(id)
-);
-
 INSERT INTO configuration (parametre, valeur) VALUES
 ('depot_debut', '2026-09-07'),
 ('depot_fin', '2026-09-18'),
+('vote1_debut', '2026-09-28'),
+('vote1_fin', '2026-10-03'),
+('vote2_debut', '2026-10-05'),
+('vote2_fin', '2026-10-09'),
+('resultats', '2026-10-10');
 
-
+-- Pour rendre un compte administrateur :
+-- UPDATE etudiant SET admin = 1 WHERE login = 'Prénom Nom';

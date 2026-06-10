@@ -7,6 +7,8 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// Fonction qui récupère les colonnes existantes dans la table etudiant.
+// Cela évite de casser le code si la base n'a pas exactement les mêmes colonnes.
 function recuperer_colonnes_etudiant(PDO $pdo) {
     $colonnes = [];
     $stmt = $pdo->query('SHOW COLUMNS FROM etudiant');
@@ -16,6 +18,7 @@ function recuperer_colonnes_etudiant(PDO $pdo) {
     return $colonnes;
 }
 
+// Fonction qui regarde si l'étudiant est administrateur ou simple étudiant.
 function determiner_role_etudiant(array $etudiant) {
     if (isset($etudiant['admin']) && (int)$etudiant['admin'] === 1) {
         return 'admin';
@@ -28,14 +31,17 @@ function determiner_role_etudiant(array $etudiant) {
     return 'etudiant';
 }
 
+// Si le formulaire n'est pas encore envoyé, on affiche la page de connexion.
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     include __DIR__ . '/../views/login.php';
     exit;
 }
 
+// On récupère les identifiants envoyés par le formulaire.
 $login = trim($_POST['login'] ?? '');
 $pass = $_POST['pass'] ?? '';
 
+// On vérifie le login et le mot de passe avec le système LDAP.
 $utilisateur = User::authentifier($login, $pass);
 
 if (!$utilisateur['success']) {
@@ -45,6 +51,7 @@ if (!$utilisateur['success']) {
 }
 
 try {
+    // On se connecte à la base de données.
     $pdo = connexion_base_de_donnees();
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -53,6 +60,7 @@ try {
     $loginComplet = trim($prenom . ' ' . $nom);
     $dateConnexion = date('Y-m-d H:i:s');
 
+    // On regarde quelles colonnes existent dans la table etudiant.
     $colonnes = recuperer_colonnes_etudiant($pdo);
     $aColonneAdmin = in_array('admin', $colonnes, true);
     $aColonneRole = in_array('role', $colonnes, true);
@@ -105,13 +113,17 @@ try {
         }
     }
 
+    // On enregistre les informations utiles dans la session.
     $_SESSION['id'] = $etudiantId;
     $_SESSION['role'] = $role;
+    $_SESSION['login'] = $loginComplet;
 
     header('Location: index.php?req=accueil');
     exit;
 
-} catch (PDOException $e) {
+} 
+
+catch (PDOException $e) {
     $error = 'Erreur de base de données : ' . $e->getMessage();
     include __DIR__ . '/../views/login.php';
     exit;

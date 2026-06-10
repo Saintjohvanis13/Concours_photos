@@ -21,7 +21,7 @@
             Connectez-vous avec vos identifiants de l’ENT.
         </p>
 
-        <form method="POST" action="index.php?page=login">
+        <form method="POST" action="index.php?req=login">
             <input type="text" name="login" placeholder="Identifiant" required>
             <input type="password" name="pass" placeholder="Mot de passe" required>
 

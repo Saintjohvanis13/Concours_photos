@@ -1,17 +1,7 @@
 <?php
 require_once(__DIR__ . '/../models/connection.php');
 
-function recuperer_date_debut_depot() {
-    $pdo = connexion_base_de_donnees();
-    $sql = "SELECT valeur FROM configuration WHERE parametre = 'depot_debut'";
-    return $pdo->query($sql)->fetchColumn();
-}
 
-function recuperer_date_fin_depot() {
-    $pdo = connexion_base_de_donnees();
-    $sql = "SELECT valeur FROM configuration WHERE parametre = 'depot_fin'";
-    return $pdo->query($sql)->fetchColumn();
-}
 
 function photo_existe($id) {
     return file_exists(__DIR__ . '/../photos/' . $id . '.jpg');
@@ -33,10 +23,10 @@ function enregistrer_photo($id, $tmp) {
     $dossierPublic = __DIR__ . '/../public/photos/';
 
     if (!is_dir($dossierPhotos)) {
-        mkdir($dossierPhotos, 0775, true);
+        mkdir($dossierPhotos, 775, true);
     }
     if (!is_dir($dossierPublic)) {
-        mkdir($dossierPublic, 0775, true);
+        mkdir($dossierPublic, 775, true);
     }
 
     $destination = $dossierPhotos . $id . '.jpg';

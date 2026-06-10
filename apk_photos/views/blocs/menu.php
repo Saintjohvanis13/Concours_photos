@@ -4,6 +4,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 require_once 'models/Etudiant.php';
 
+// On prépare le nom affiché dans le menu et on vérifie si l'utilisateur est admin.
 $login = '';
 $estAdmin = false;
 if (isset($_SESSION['id'])) {
@@ -14,6 +15,7 @@ if (isset($_SESSION['id'])) {
     }
 }
 $req = $_GET['req'] ?? 'accueil';
+// Cette fonction ajoute la classe CSS active sur la page ouverte.
 function classe_active($nom, $req) {
     return $nom === $req ? ' class="active"' : '';
 }

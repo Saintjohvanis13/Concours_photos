@@ -23,3 +23,5 @@ function afficher_top3_resultats() {
     $photosTop3 = recuperer_top3_photos_tour2();
     require('views/resultats_view.php');
 }
+
+//NANCY 

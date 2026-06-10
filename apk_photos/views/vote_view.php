@@ -5,16 +5,9 @@
         <h2>Phase de vote</h2>
         <div class="soulignement-orange"></div>
 
-        <?php if (isset($_SESSION['id']) && isset($_SESSION['login'])): ?>
-            <p class="vote-user">
-                Bienvenue, étudiant n°<?= $_SESSION['id'] ?> (<?= htmlspecialchars($_SESSION['login']) ?>)
-            </p>
-        <?php endif; ?>
 
         <?php if ($phase === 0): ?>
 
-            <hr class="separateur">
-            <p>Revenez à cette date pour voter.</p>
             <a href="index.php?req=accueil" class="btn-retour">Retour à l’accueil</a>
         <?php else: ?>
             <div class="carte-message">
