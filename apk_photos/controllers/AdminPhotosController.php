@@ -37,5 +37,5 @@ function ctrl_modifier_photos() {      //on vérifie la connexion
     }
 
     $photos = recuperer_photos_admin();              // récupère la liste des photos
-    require(__DIR__ . '/../views/admin_photos_view.php');     //envoie à la vue pour affichage
+    require(__DIR__ '../views/admin_photos_view.php';     //envoie à la vue pour affichage
 }
