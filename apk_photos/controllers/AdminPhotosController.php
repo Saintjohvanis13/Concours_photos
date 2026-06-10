@@ -24,7 +24,7 @@ function ctrl_modifier_photos() {      //on vérifie la connexion
         if ($action === 'supprimer') {      //on execute les actions
             supprimer_photo_admin($idPhoto, $nomFichier);
             $_SESSION['message_admin_photos'] = "Photo supprimée.";
-        } elseif ($action === 'modifier') {
+        } elseif ($action === 'modifier') {   // aucune erreur pendant l'upload
             if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK && modifier_fichier_photo_admin($idPhoto, $nomFichier, $_FILES['photo'])) {
                 $_SESSION['message_admin_photos'] = "Photo modifiée.";
             } else {
