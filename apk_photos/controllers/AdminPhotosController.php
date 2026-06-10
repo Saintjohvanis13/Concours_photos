@@ -1,5 +1,5 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {           //le co ntro démarre la session  et chargr les modèles
+if (session_status() === PHP_SESSION_NONE) {           //le contro démarre la session  et chargr les modèles
     session_start();
 }
 
