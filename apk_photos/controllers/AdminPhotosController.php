@@ -32,7 +32,7 @@ function ctrl_modifier_photos() {      //on vérifie la connexion
             }
         }
 
-        header('Location: index.php?req=modifier_photos');
+        header('Location: index.php?req=modifier_photos');     // redirection
         exit;
     }
 
