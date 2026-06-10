@@ -3,8 +3,8 @@ if (session_status() === PHP_SESSION_NONE) {           //le contro démarre la s
     session_start();
 }
 
-require_once(__DIR__ . '/../models/Etudiant.php');
-require_once(__DIR__ . '/../models/AdminPhotos.php');
+require_once   '../models/Etudiant.php';
+require_once   '../models/AdminPhotos.php';
 
 function ctrl_modifier_photos() {      //on vérifie la connexion
     if (!isset($_SESSION['id'])) {
